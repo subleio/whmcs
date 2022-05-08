@@ -20,9 +20,6 @@ Fill out with dummy data.
 Select shared hosting
 Select not to require a domain
 
-## Pricing Configuration
-![image](https://user-images.githubusercontent.com/32719411/132654308-9c58c7a5-0823-4de4-8508-1cfb4d8af915.png)
-
 ## Module settings
 ![image](https://user-images.githubusercontent.com/71713670/132988936-c00329a5-0e47-433a-9520-4b304c65bb62.png)
 
