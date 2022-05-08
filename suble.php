@@ -140,13 +140,14 @@ function suble_CreateAccount(array $params)
     try {
        //if($param["configoption1"] == "Virtual_Machine") {
             $sessionParsed = json_decode(
-                HTTPRequester::HTTPPost(
+                SubleHTTPRequester::HTTPPost(
                     "https://api.suble.io/projects/".$params["configoption3"]."/reseller/order/vm",
                     array(
                         "productid" => $params["accountid"],
                         "package" => $params["configoption2"],
                         "os" => "".$params["customfields"]["os"],
                         "productname" => "".$params["customfields"]["name"],
+                        "password" => "".$params["customfields"]["password"],
 
                         "name" => $params["clientsdetails"]["fullname"],
                         "email" => $params["clientsdetails"]["email"],
@@ -195,7 +196,7 @@ function suble_SuspendAccount(array $params)
         // Call the service's suspend function, using the values provided by
         // WHMCS in `$params`.
         $responseData = json_decode(
-            HTTPRequester::HTTPPost(
+            SubleHTTPRequester::HTTPPost(
                 "https://api.suble.io/projects/".$params["configoption3"]."/reseller/products/".$params["accountid"]."/suspend",
                 array(),
                 $params["configoption4"]
@@ -239,7 +240,7 @@ function suble_UnsuspendAccount(array $params)
     $err = "success";
     try {
         $responseData = json_decode(
-            HTTPRequester::HTTPDelete(
+            SubleHTTPRequester::HTTPDelete(
                 "https://api.suble.io/projects/".$params["configoption3"]."/reseller/products/".$params["accountid"]."/suspend",
                 array(),
                 $params["configoption4"]
@@ -281,7 +282,7 @@ function suble_TerminateAccount(array $params)
 {
     try {
         $sessionParsed = json_decode(
-            HTTPRequester::HTTPDelete(
+            SubleHTTPRequester::HTTPDelete(
                 "https://api.suble.io/projects/".$params["configoption3"]."/reseller/products/".$params["accountid"],
                 array(),
                 $params["configoption4"]
@@ -325,7 +326,7 @@ function suble_ChangePackage(array $params)
     $err = "success";
     try {
         $responseData = json_decode(
-            HTTPRequester::HTTPPost(
+            SubleHTTPRequester::HTTPPost(
                 "https://api.suble.io/projects/".$params["configoption3"]."/reseller/products/".$params["accountid"]."/package",
                 array(
                     "package" => $params["configoption2"]
@@ -430,7 +431,7 @@ function suble_TestConnection(array $params)
 function suble_ClientArea(array $params)
 {
     try {
-        $sessionParsed = json_decode(HTTPRequester::HTTPGet("https://api.suble.io/projects/".$params["configoption3"]."/reseller/users/".$params["clientsdetails"]["uuid"]."/session", array(), $params["configoption4"]), true);
+        $sessionParsed = json_decode(SubleHTTPRequester::HTTPGet("https://api.suble.io/projects/".$params["configoption3"]."/reseller/users/".$params["clientsdetails"]["uuid"]."/session", array(), $params["configoption4"]), true);
         $authLink = "https://".$sessionParsed["domain"]."/auth?auth=".$sessionParsed["token"];
         return array(
             'templatefile' => 'templates/overview.tpl',
@@ -459,7 +460,7 @@ function suble_ClientArea(array $params)
 }
 
 //https://stackoverflow.com/a/45494300/12746977
-class HTTPRequester {
+class SubleHTTPRequester {
     /**
      * @description Make HTTP-GET call
      * @param       $url
